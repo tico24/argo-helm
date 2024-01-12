@@ -87,6 +87,10 @@
     {
       "matchPackagePatterns": ["redis-ha"],
       "enabled": false
+    },
+    {
+      "matchDepTypes": ["github-actions"],
+      "schedule": ["every weekend"]
     }
   ]
 }
