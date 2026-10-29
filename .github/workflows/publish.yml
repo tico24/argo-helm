@@ -23,7 +23,7 @@ jobs:
   ## Its push to main starts the run that releases. It checks out main's tip, not
   ## the pushed commit, so a run that waited in the queue sees every merge.
   fold:
-    if: github.repository == 'argoproj/argo-helm'
+    if: github.repository == 'tico24/argo-helm'
     permissions:
       contents: read  # pushes go through the release App's token
     runs-on: ubuntu-latest
