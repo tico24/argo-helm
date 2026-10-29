@@ -33,7 +33,7 @@ jobs:
         run: docker run --rm --user 1001 --volume "${GITHUB_WORKSPACE}:/work:ro" --workdir /work/charts "${AH_IMAGE}" ah lint
 
   chart-test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
     steps:
@@ -114,6 +114,13 @@ jobs:
           steps.list-changed.outputs.changed == 'true' &&
           contains(steps.list-changed.outputs.changed_charts, 'argo-cd')
         run: ./scripts/ci-preload-images.sh chart-testing
+
+      - name: Show Docker image store and images on a kind node
+        if: always() && steps.list-changed.outputs.changed == 'true'
+        run: |
+          docker version --format 'docker server {{.Server.Version}} {{.Server.Os}}/{{.Server.Arch}}'
+          docker info --format 'driver={{.Driver}} {{json .DriverStatus}}'
+          docker exec chart-testing-worker crictl images | grep -E 'IMAGE|ecr-public' || true
 
       - name: Deploy latest ArgoCD CRDs when testing ArgoCD extensions
         if: |

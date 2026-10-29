@@ -1,0 +1,3 @@
+bump: patch
+kind: fixed
+description: Throwaway fragment to make CI run the argo-cd preload step
